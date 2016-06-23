@@ -19,7 +19,7 @@ namespace DragonSlaying
 
         static Dragon MyEnemy = new Dragon
         {
-            Name = "Drogon",
+            Name = "Dragon",
             Offense = 16,
             Defense = 12,
             MaxHitPoints = 60,

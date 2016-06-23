@@ -12,7 +12,10 @@ namespace DragonSlaying
         public int Offense { get; set; }
         public int Defense { get; set; }
         public int MaxHitPoints { get; set; }
+
         // TODO: Add any necessary fields
+        public int Gold { get; set; }
+        private int _hitPoints;
         
         /// <summary>
         /// Keeps track of the number of hit points a Hero has. Cannot be less than 0
@@ -23,11 +26,19 @@ namespace DragonSlaying
             get
             {
                 // TODO
-                throw new NotImplementedException();
+                return _hitPoints;
+                //throw new NotImplementedException();
             }
             set
             {
-                // TODO
+                if (value < 0)
+                {
+                    _hitPoints = 0;
+                }
+                else
+                {
+                    _hitPoints = value;
+                }
             }
         }
 
@@ -45,7 +56,16 @@ namespace DragonSlaying
         public override string ToString()
         {
             // TODO
-            throw new NotImplementedException();
+            var sb = new StringBuilder();
+
+            sb.AppendLine(Name);
+            sb.AppendLine("==========");
+            sb.AppendFormat("Off: {0}\tDef: {1}\n", Offense, Defense);
+            sb.AppendFormat("HP: {0}/{1}\n", HitPoints, MaxHitPoints);
+
+            return sb.ToString();
+
+            //throw new NotImplementedException();
         }
 
 
@@ -57,7 +77,15 @@ namespace DragonSlaying
         public bool IsAlive()
         {
             // TODO
-            throw new NotImplementedException();
+            if (HitPoints > 0)
+            {
+                return true;
+            }
+            else
+            {
+                return false;
+            }
+            //throw new NotImplementedException();
         }
 
         /// <summary>
@@ -71,6 +99,21 @@ namespace DragonSlaying
         /// <param name="diceRoll">A number (1-20) from a dice roll, relating to the effectiveness of the attack</param>
         public void Attack(Dragon opponent, int diceRoll)
         {
+
+            int dragonDamage = diceRoll + Offense - opponent.Defense;
+            if (dragonDamage < 0)
+            {
+                dragonDamage = 0;
+            }
+            if (diceRoll == 1)
+            {
+                dragonDamage = 0;
+            }
+            if (diceRoll == 20)
+            {
+                dragonDamage = Offense * 3;
+            }
+            opponent.HitPoints -= dragonDamage;
             // TODO
         }
 
@@ -86,6 +129,20 @@ namespace DragonSlaying
         public void Defend(Dragon opponent, int diceRoll)
         {
             // TODO
+            int heroDamage = opponent.Offense - diceRoll - Defense;
+            if (heroDamage < 0)
+            {
+                heroDamage = 0;
+            }
+            if (diceRoll == 1)
+            {
+                heroDamage = opponent.Offense;
+            }
+            if (diceRoll == 20)
+            {
+                heroDamage = 0;
+            }
+            HitPoints -= heroDamage;
         }
     }
 }

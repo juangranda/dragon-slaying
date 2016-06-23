@@ -34,7 +34,12 @@ namespace DragonSlaying
         public bool IsAlive()
         {
             // TODO
-            throw new NotImplementedException();
+            if (HitPoints > 0)
+            {
+                return true;
+            }
+            return false;
+            //throw new NotImplementedException();
         }
 
     }
